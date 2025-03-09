@@ -8,9 +8,12 @@ import Header from './components/HeaderView.vue'
     <Header />
   </header>
 
-  <p>Hello world</p>
-
+<div class="wrapper"> 
   <RouterView />
+</div>
+ 
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

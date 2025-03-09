@@ -3,5 +3,5 @@
 .wrapper {
   width: 1055px;
   margin: 0 auto ;
-  border: 1px solid black;
+  border: 3px dotted rgb(14, 39, 233);
 }
