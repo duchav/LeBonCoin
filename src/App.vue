@@ -1,6 +1,8 @@
 <script setup>
+
 import { RouterView } from 'vue-router'
 import Header from './components/HeaderView.vue'
+import Footer from './components/FooterView.vue'
 </script>
 
 <template>
@@ -8,12 +10,20 @@ import Header from './components/HeaderView.vue'
     <Header />
   </header>
 
-<div class="wrapper"> 
-  <RouterView />
-</div>
- 
+  <div><RouterView /></div>
+
+
+
+  <Footer/>
 </template>
 
 <style scoped>
+header {
+  position : sticky;
+  top : 0px;
+}
+div  {
+  margin-top: 0px;
 
+}
 </style>
