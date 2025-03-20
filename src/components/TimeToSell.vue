@@ -23,6 +23,7 @@ import BtnPublishOffer from './BtnPublishOffer.vue'
   position: relative ;
   z-index: 3;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 div > div {
    display  :flex;

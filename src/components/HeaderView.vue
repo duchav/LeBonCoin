@@ -1,23 +1,34 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import BtnPublishOffer from '@/components/BtnPublishOffer.vue'
+import { inject } from 'vue';
+const GlobalStore = inject('GlobalStore')
+
+const handleQuit = ()=>{
+  GlobalStore.changeToken('')
+}
 </script>
 
 <template>
   <main>
-    <section class="wrapper">
+    <section>
       <div class="topMenuLine">
-        <div><img style="width: 170px" src="../assets/img/logo.svg" alt="LogoLeboncoin" /></div>
+        <div>
+          <RouterLink :to="{ name: 'home' }">
+            <img style="width: 170px" src="../assets/img/logo.svg" alt="LogoLeboncoin" />
+          </RouterLink>
+        </div>
         <div class="midmenu">
           <BtnPublishOffer />
-          <div >
-            <input type="text" name="search" id="search" placeholder="Rechercher sur leboncoin"/>
-            <font-awesome-icon :icon="['fas', 'search']" class="lens"/>
+          <div>
+            <input type="text" name="search" id="search" placeholder="Rechercher sur leboncoin" />
+            <font-awesome-icon :icon="['fas', 'search']" class="lens" />
           </div>
         </div>
-        <div class="connect">
-          <font-awesome-icon :icon="['far', 'user']" />
-          <p>Se connecter</p>
-          <!-- <font-awesome-icon :icon="['fas', 'sign-out-alt']" /> -->
+        <div >
+         <RouterLink :to="{ name: 'login' }" class="connect" v-if="!GlobalStore.userToken.value">
+          <font-awesome-icon :icon="['far', 'user']" />Se connecter</RouterLink>
+         <p v-else v-on:mousedown="handleQuit" ><font-awesome-icon :icon="['fas', 'sign-out-alt']" /></p> 
         </div>
       </div>
       <div class="bottomMenuLine">
@@ -59,8 +70,8 @@ import BtnPublishOffer from '@/components/BtnPublishOffer.vue'
   flex-direction: row;
   align-items: center;
 }
-.bottomMenuLine >svg{
-  font-size:4px;
+.bottomMenuLine > svg {
+  font-size: 4px;
 }
 .midmenu {
   display: flex;
@@ -68,18 +79,19 @@ import BtnPublishOffer from '@/components/BtnPublishOffer.vue'
   align-items: center;
   gap: 20px;
 }
-.midmenu >div {
+.midmenu > div {
   background-color: var(--lightgrey);
   padding: 5px 7px;
   /* border: 1px solid black; */
-  display: flex; align-items: center;
+  display: flex;
+  align-items: center;
   border-radius: 5px;
 }
-input { 
- border: none;
- outline: none;
- width: 250px;
- background-color: var(--lightgrey);
+input {
+  border: none;
+  outline: none;
+  width: 250px;
+  background-color: var(--lightgrey);
 }
 .lens {
   background-color: var(--orange);
@@ -88,13 +100,13 @@ input {
   font-size: 24px;
   border-radius: 5px;
 }
-.connect{
+.connect {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 12px;
+  font-size: 14px;
 }
-.connect >svg {
+.connect > svg {
   font-size: 16px;
   padding: 5px;
   box-sizing: content-box;

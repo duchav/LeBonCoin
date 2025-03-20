@@ -1,5 +1,4 @@
 <script setup>
-
 import { RouterView } from 'vue-router'
 import Header from './components/HeaderView.vue'
 import Footer from './components/FooterView.vue'
@@ -12,18 +11,23 @@ import Footer from './components/FooterView.vue'
 
   <div><RouterView /></div>
 
-
-
-  <Footer/>
+  <Footer />
 </template>
 
 <style scoped>
 header {
-  position : sticky;
-  top : 0px;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
 }
-div  {
+footer {
+  position: sticky;
+bottom:  0px;
+  z-index: 1;
+}
+div {
   margin-top: 0px;
-
+  position: relative;
+  z-index: 0;
 }
 </style>

@@ -1,10 +1,14 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { computed } from 'vue'
+
 const props = defineProps({
   offerInfos: Object,
 })
-//console.log('Avatar=>>>', props.offerInfos.attributes)
-//console.log('=>>>', props.offerInfos.attributes.pictures.data[0].attributes.url)
+
+const formatedDate = computed(() => {
+  return props.offerInfos.attributes.publishedAt.split('T')[0].split('-').reverse().join('/')
+})
 </script>
 
 <template>
@@ -30,7 +34,7 @@ const props = defineProps({
           <div>{{ offerInfos.attributes.price }} €</div>
         </div>
         <div class="ligneDuBas">
-          <div>{{ offerInfos.attributes.publishedAt }}</div>
+          <div>{{ formatedDate }}</div>
           <font-awesome-icon :icon="['far', 'heart']" />
         </div>
       </section>
@@ -40,8 +44,7 @@ const props = defineProps({
 
 <style scoped>
 section {
-
-  width: 200px;
+  width: calc((100%-60px) / 5);
   height: 370px;
   display: flex;
   flex-direction: column;
@@ -49,12 +52,12 @@ section {
   margin-bottom: 30px;
 }
 .veryfirst {
-display: flex;
-align-items: center;
-gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
-.veryfirst > p{
-margin-top: 7px;
+.veryfirst > p {
+  margin-top: 7px;
 }
 .upperpart {
   display: flex;
@@ -62,7 +65,7 @@ margin-top: 7px;
   gap: 7px;
 }
 div {
-  text-decoration :none;
+  text-decoration: none;
   font-size: 12px;
   font-weight: bold;
 }
@@ -81,5 +84,6 @@ div {
 .ligneDuBas {
   display: flex;
   justify-content: space-between;
+  color: var(--darkgrey);
 }
 </style>

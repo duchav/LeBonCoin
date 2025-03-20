@@ -2,7 +2,16 @@
 :root{
     --orange: #EC5A12;
     --lightgrey: #f4f9fe;
+    --darkgrey: #8b8f918d;
+    --lightorange :#FDE8DC; 
+    --darkorange :#BF8A6F;
+    --navyblue:#094171;
+    
 }
 body {
     font-family: "nunito-sans", sans-serif;
+}
+a {
+    color: inherit;
+    text-decoration: none;
 }
