@@ -1,5 +1,6 @@
 <script setup>
-import BtnPublishOffer from './BtnPublishOffer.vue'
+import BtnAcheter from './BtnAcheter.vue';
+
 </script>
 
 <template>
@@ -7,7 +8,7 @@ import BtnPublishOffer from './BtnPublishOffer.vue'
     <img src="../assets/img/onde-corail.svg" alt="" />
     <div>
       <p>C'est le moment de vendre</p>
-      <BtnPublishOffer />
+      <BtnAcheter :title="'Déposer une annonce'" :couleur="'--orange'"/>
     </div>
     <img src="../assets/img/feuille-bleue.svg" alt="" />
   </div>

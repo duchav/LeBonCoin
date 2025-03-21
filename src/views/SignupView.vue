@@ -9,9 +9,10 @@ const enCours = ref(false)
 const errorMsg = ref('')
 const displaypswd = ref(false)
 
-const nom = ref('MUSK')
-const email = ref('elon@free.fr')
-const password = ref('elonMusk')
+const nom = ref('Elon MUSK')
+const email = ref('elon@gmail.com')
+const password = ref('azerty')
+const userinfos = ref()
 
 const handleSubmit = async () => {
   const userData = { email: email.value, username: nom.value, password: password.value }
@@ -28,13 +29,15 @@ const handleSubmit = async () => {
       'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/auth/local/register',
       userData,
     )
-    GlobalStore.changeToken(data.jwt) // je stocke le token dans le magasin central ..;
+    console.log('data = ', data)
+    userinfos.value = { userName: data.user.username, email: data.user.email, jwt: data.jwt }
+    GlobalStore.changeUserInfos(userinfos.value) // je stocke le token dans le magasin central ..;
+    $cookies.set('userInfos', userinfos.value)
     router.push({ name: 'home' }) // je reviens vers la page d'accueil
 
-    console.log('jwt>>>', data.jwt)
   } catch (error) {
     console.log('Catch: >>>', error.response.data.error.message)
-    errorMsg.value = error.response.data.error.message
+    errorMsg.value = error.message
   }
   enCours.value = false
 }

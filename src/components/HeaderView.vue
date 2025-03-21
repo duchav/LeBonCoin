@@ -1,11 +1,12 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import BtnPublishOffer from '@/components/BtnPublishOffer.vue'
-import { inject , ref} from 'vue';
+import BtnAcheter from './BtnAcheter.vue';
+import { inject } from 'vue'
 const GlobalStore = inject('GlobalStore')
-const name =GlobalStore.useremail.value
-const handleQuit = ()=>{
-  GlobalStore.changeToken('')
+
+const handleQuit = () => {
+  GlobalStore.changeUserInfos(null)
+  $cookies.remove('Userinfos')
 }
 </script>
 
@@ -19,16 +20,24 @@ const handleQuit = ()=>{
           </RouterLink>
         </div>
         <div class="midmenu">
-          <BtnPublishOffer />
+          <BtnAcheter :title="'Déposer une annonce'" :couleur="'--orange'"/>
           <div>
             <input type="text" name="search" id="search" placeholder="Rechercher sur leboncoin" />
             <font-awesome-icon :icon="['fas', 'search']" class="lens" />
           </div>
         </div>
-        <div >
-         <RouterLink :to="{ name: 'login' }" class="connect" v-if="!GlobalStore.userToken.value">
-          <font-awesome-icon :icon="['far', 'user']" />Se connecter</RouterLink>
-         <p v-else v-on:mousedown="handleQuit" >{{ name }}<font-awesome-icon :icon="['fas', 'sign-out-alt']" /></p> 
+        <div class="endmenu">
+          <RouterLink :to="{ name: 'login' }" class="connect" v-if="!GlobalStore.userInfos.value">
+            <font-awesome-icon :icon="['far', 'user']" />Se connecter</RouterLink
+          >
+
+          <div v-else>
+            <div>
+              <font-awesome-icon :icon="['far', 'user']" />
+              {{ GlobalStore.userInfos.value.userName }}
+            </div>
+            <font-awesome-icon :icon="['fas', 'sign-out-alt']" v-on:mousedown="handleQuit" />
+          </div>
         </div>
       </div>
       <div class="bottomMenuLine">
@@ -57,22 +66,19 @@ const handleQuit = ()=>{
 </template>
 
 <style scoped>
+section {
+  background-color: white;
+  width: 1055px;
+  height: 110px;
+  margin: 0 auto;
+}
 .topMenuLine {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0px;
 }
-.bottomMenuLine {
-  font-size: 13px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-}
-.bottomMenuLine > svg {
-  font-size: 4px;
-}
+
 .midmenu {
   display: flex;
   flex-direction: row;
@@ -100,6 +106,9 @@ input {
   font-size: 24px;
   border-radius: 5px;
 }
+.lens:hover {
+  cursor:pointer
+}
 .connect {
   display: flex;
   flex-direction: column;
@@ -107,14 +116,38 @@ input {
   font-size: 14px;
 }
 .connect > svg {
-  font-size: 16px;
+  font-size: 18px;
   padding: 5px;
   box-sizing: content-box;
 }
-section {
-  background-color: white;
-  width: 1055px;
-  height: 110px;
-  margin: 0 auto;
+.endmenu > div {
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+  align-items: center;
+}
+.endmenu > div > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+.endmenu > div > div > svg {
+  font-size: 20px;
+}
+.endmenu > div > svg:hover {
+  cursor: pointer;
+}
+
+.bottomMenuLine {
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+.bottomMenuLine > svg {
+  font-size: 4px;
 }
 </style>

@@ -4,11 +4,11 @@ const props = defineProps({
   couleur: String,
 })
 const mycolor = `background-color : var(${props.couleur})`
-
+console.log(mycolor)
 </script>
 
 <template>
-  <button :style="mycolor">{{ title }}</button>
+  <button :style="mycolor"><font-awesome-icon :icon="['far', 'plus-square']" />{{ title }}</button>
 </template>
 
 <style scoped>
@@ -18,7 +18,7 @@ button {
   color: white;
   padding: 10px;
   border-radius: 10px;
-  height: 40px;
+  height: 36px;
   font-weight: bold;
 }
 button > svg {

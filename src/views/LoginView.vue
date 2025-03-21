@@ -7,10 +7,13 @@ const router = useRouter()
 
 const GlobalStore = inject('GlobalStore')
 
-const email = ref('vance@free.fr')
+const userinfos = ref()
+
+const email = ref('elon@gmail.com')
 const password = ref('azerty')
 const ErrMsg = ref('')
 const NoSearch = ref(true)
+const displaypswd = ref(false)
 
 const handleSubmit = async () => {
   const userData = {
@@ -28,14 +31,15 @@ const handleSubmit = async () => {
       'https://site--strapileboncoin--2m8zk47gvydr.code.run/api/auth/local',
       userData,
     )
-    console.log('jwt = ', data)
-    GlobalStore.changeToken(data.jwt)
-    GlobalStore.changeUseremail(email)
-    $cookies.set('userToken',data.jwt)
+    console.log('data = ', data)
+    userinfos.value = { userName: data.user.username, email: data.user.email, jwt: data.jwt }
+    GlobalStore.changeUserInfos(userinfos.value)
+    $cookies.set('userInfos', userinfos.value,10)
+
     router.push({ name: 'home' })
   } catch (error) {
     console.log('Catch: >>>', error.response.data.error.message)
-    ErrMsg.value = error.response.data.error.message
+    ErrMsg.value = error.message
   }
   NoSearch.value = true
 }
@@ -50,7 +54,8 @@ const handleSubmit = async () => {
         </div>
 
         <label for="email"
-          ><span>Email <sup>*</sup></span><input
+          ><span>Email <sup>*</sup></span
+          ><input
             v-on:mouseenter="ErrMsg = ''"
             type="text"
             name="email"
@@ -58,14 +63,30 @@ const handleSubmit = async () => {
             v-model="email"
         /></label>
         <label for="password"
-          ><span>Mot de passe <sup>*</sup></span><input
-            type="password"
-            name="password"
-            placeholder="your password"
-            v-model="password"
-            v-on:mouseenter="ErrMsg = ''"
-        /></label>
-        <button v-if="NoSearch">Se connecter   <font-awesome-icon :icon="['fas', 'arrow-right']" /></button>
+          ><span>Mot de passe <sup>*</sup></span>
+          <div class="pswd">
+            <input
+              :type="displaypswd ? 'text' : 'password'"
+              name="password"
+              placeholder="your password"
+              v-model="password"
+              v-on:mouseenter="ErrMsg = ''"
+            />
+            <font-awesome-icon
+              v-if="!displaypswd"
+              :icon="['far', 'eye-slash']"
+              @click="displaypswd = !displaypswd"
+            />
+            <font-awesome-icon
+              v-else
+              :icon="['far', 'eye']"
+              @click="displaypswd = !displaypswd"
+            />
+          </div>
+        </label>
+        <button v-if="NoSearch">
+          Se connecter <font-awesome-icon :icon="['fas', 'arrow-right']" />
+        </button>
         <button v-else>Connexion en cours...</button>
         <p class="alert" v-if="ErrMsg">Un problème est survenu, veuillez essayer à nouveau</p>
 
@@ -95,10 +116,20 @@ main {
   width: 480px;
   height: 490px;
   padding: 30px;
-  
+
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 0 7px var(--med-grey);
+}
+input {
+  border-radius: 15px;
+  border: 1px solid black;
+  height: 45px;
+  padding-left: 15px;
+  width:100%
+}
+input:focus {
+  outline: none;
 }
 p,
 label {
@@ -134,35 +165,55 @@ button {
 button > svg {
   margin-right: 5px;
 }
-div> span {
+div > span {
   font-weight: bold;
   text-decoration: underline;
 }
+.pswd  {
+  display:flex;
+  position: relative;
+}
+.pswd > svg{
+  height: 100%;
+  position: absolute;
+  right: 0px;
+  border-left: 1px solid black;
+  font-size: 12px;
+  width: 30px;
+  padding: 5px;
+}
+.pswd >svg:hover {
+  cursor: pointer;
+}
+.password > div> input{
+  width: 100%
+}
+
 label {
   display: flex;
   gap: 5px;
 }
-input{
-  border-radius: 15px;
-  border: 1px solid black;
-  height: 45px;
-  padding-left: 15px;
-}
-input:focus{
-  outline: none;
-}
-.alert{
+
+.alert {
   color: red;
   text-align: center;
   animation-name: example;
   animation-duration: 1s;
   animation-iteration-count: 3;
-  padding :10px
+  padding: 10px;
 }
 @keyframes example {
-  0%{color: red;}
-  49%{color: red;}
-  50%{color: white;}
-  100%{color: white;}
+  0% {
+    color: red;
+  }
+  49% {
+    color: red;
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: white;
+  }
 }
 </style>

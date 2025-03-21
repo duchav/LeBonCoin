@@ -3,7 +3,6 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 
 import OfferListView from '../components/OfferListView.vue'
-import BtnPublishOffer from '../components/BtnPublishOffer.vue'
 import TimeToSell from '../components/TimeToSell.vue'
 
 const offersList = ref([])
