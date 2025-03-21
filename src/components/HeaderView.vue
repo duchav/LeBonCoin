@@ -1,9 +1,9 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import BtnPublishOffer from '@/components/BtnPublishOffer.vue'
-import { inject } from 'vue';
+import { inject , ref} from 'vue';
 const GlobalStore = inject('GlobalStore')
-
+const name =GlobalStore.useremail.value
 const handleQuit = ()=>{
   GlobalStore.changeToken('')
 }
@@ -28,7 +28,7 @@ const handleQuit = ()=>{
         <div >
          <RouterLink :to="{ name: 'login' }" class="connect" v-if="!GlobalStore.userToken.value">
           <font-awesome-icon :icon="['far', 'user']" />Se connecter</RouterLink>
-         <p v-else v-on:mousedown="handleQuit" ><font-awesome-icon :icon="['fas', 'sign-out-alt']" /></p> 
+         <p v-else v-on:mousedown="handleQuit" >{{ name }}<font-awesome-icon :icon="['fas', 'sign-out-alt']" /></p> 
         </div>
       </div>
       <div class="bottomMenuLine">
